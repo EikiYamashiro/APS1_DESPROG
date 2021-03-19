@@ -5,7 +5,7 @@
 
 double dif = 0.000001;
 
-//
+
 int between(int p, int a, int b){
     double min, max;
     if (a>b){
@@ -57,5 +57,28 @@ int verify(point p, point a, point b) {
 }
 
 int inside(point p, point poly[], int n) {
+
+    int v;
+
+    for (int i=0; i<=n; i++){
+
+        if (i==n){
+            v = verify(p, poly[i], poly[0]);
+        } else {
+            v = verify(p, poly[i], poly[i+1]);
+        }
+
+        if (v==0) {
+            return 0;
+        }
+        else if (v==1){
+
+        }
+        else {
+            return 1;
+        }
+
+    }
+
     return 0;
 }
