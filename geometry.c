@@ -76,26 +76,25 @@ int verify(point p, point a, point b) {
 int inside(point p, point poly[], int n) {
 
     int v;
+    int walls = 0;
 
-    for (int i=0; i<=n; i++){
+    for (int i=0; i<n; i++){
 
-        if (i==n){
-            v = verify(p, poly[i], poly[0]);
+        if (i==n-1){
+            v = verify(p, poly[0], poly[n-1]);
         } else {
             v = verify(p, poly[i], poly[i+1]);
         }
 
-        if (v==0) {
-            return 0;
-        }
-        else if (v==1){
-            
-        }
-        else {
+        if (v==2) {
             return 1;
         }
-
+        if (v==1){
+            walls++;
+        }
     }
-
+    if (walls%2 != 0) {
+        return 1;
+    }
     return 0;
 }
