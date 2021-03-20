@@ -1,20 +1,17 @@
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "geometry.h"
 
-double dif = 0.000001;
+double dif = 0.00000000001;
 
 
 int between(int p, int a, int b){
-    double min, max;
+    int min = a, max = b;
     if (a>b){
         min = b;
         max = a;
-    }
-    else{
-        min = a;
-        max = b;
     }
     if((abs(p - min) < dif || p > min) && (abs(p - max) < dif || p < max)){
         return 1;
@@ -23,7 +20,7 @@ int between(int p, int a, int b){
 }
 
 int left(int p, int a, int b){
-    double max = b;
+    int max = b;
     if (a>b){
         max = a;
     }
@@ -39,7 +36,13 @@ int on_line(point p, point a, point b){
     double y = m*p.x + b_intercept;
     double x = (p.y - b_intercept)/m;
 
-    if(((double)abs(p.y - y) < dif) && ((double)abs(p.x - x) < dif) && between(p.x, a.x, b.x) && between(p.y, a.y, b.y)){
+    if(a.y == b.y && a.y == p.y && between(p.x, a.x, b.x)){
+        return 1;
+    } 
+    if(a.x == b.x && a.x == p.x && between(p.y, a.y, b.y)){
+        return 1;
+    } 
+    if((fabs(p.y - y) < dif) && (fabs(p.x - x) < dif) && between(p.x, a.x, b.x) && between(p.y, a.y, b.y)){
         return 1;
     }
     return 0;
