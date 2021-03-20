@@ -19,12 +19,26 @@ int between(int p, int a, int b){
     return 0;
 }
 
-int left(int p, int a, int b){
-    int max = b;
-    if (a>b){
-        max = a;
-    }
-    if (p < max){
+int left(point p, point a, point b){
+    double m = (double)(a.y - b.y)/(a.x - b.x);
+    double b_intercept = a.y - m*a.x;
+    double x = (p.y - b_intercept)/m;
+    int y_min = a.y;
+    if (a.y > b.y){y_min = b.y;}
+
+    if(a.y == b.y){
+        return 0;
+    } 
+    if(a.x == b.x && a.x > p.x && between(p.y, a.y, b.y)){
+        if (fabs(p.y-y_min) < dif){
+            return 0;
+        }
+        return 1;
+    } 
+    if (p.x < x && between(p.y, a.y, b.y)){
+        if (fabs(p.y-y_min) < dif){
+            return 0;
+        }
         return 1;
     }
     return 0;
@@ -53,7 +67,7 @@ int verify(point p, point a, point b) {
     if (on_line(p,a,b)){
         return 2;
     }
-    if (between(p.y, a.y, b.y) && left(p.x, a.x, b.x)){
+    if (left(p, a, b)){
         return 1;
     }
     return 0;
@@ -75,7 +89,7 @@ int inside(point p, point poly[], int n) {
             return 0;
         }
         else if (v==1){
-
+            
         }
         else {
             return 1;
